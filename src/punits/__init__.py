@@ -5,28 +5,7 @@ punits
 from typing import List, Optional
 from fractions import Fraction
 
-from .consts import LABELS, CONVERSIONS
-
-
-class UnknownUnitException(Exception):
-    """
-    Exception thrown on encountering a unit name
-    that punits cannot identify.
-    """
-    def __init__(self, unit_name: str):
-        self.unit_name = unit_name
-        super().__init__(unit_name)
-
-
-class MissingParameterException(Exception):
-    """
-    Exception thrown when a parameter that is
-    necessary to perform conversion is not
-    found.
-    """
-    def __init__(self, missing_param: str):
-        self.missing_param = missing_param
-        super().__init__(missing_param)
+from punits.consts import LABELS, CONVERSIONS
 
 
 def find_unit_code(measure: str,
@@ -39,10 +18,10 @@ def find_unit_code(measure: str,
     unit_name = unit_name.replace(".", "")
     for label in LABELS[measure]:
         if (unit_name == label) or (unit_name in LABELS[measure][label]):
-            if label == 'NO_SHORT_CODE':
-                return unit_name
+            # if label == 'NO_SHORT_CODE':
+            #    return unit_name
             return label
-    raise UnknownUnitException(unit_name)
+    raise ValueError(f"Gee.. I don't know about '{unit_name}'..")
 
 
 def to_from_base(measure: str,
@@ -114,7 +93,7 @@ def punits(measure: str,
 
     if ('dpi' not in params
             and (src_unit == 'px' or target_unit == 'px')):
-        raise MissingParameterException('dpi')
+        raise ValueError("Missing parameter: dpi")
 
     for value in values:
         base_value = to_from_base(measure, src_unit, "to", value, params)

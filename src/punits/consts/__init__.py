@@ -1,7 +1,6 @@
 """
-Makes CONVERSIONS and LABELS visible directly
-from consts
+Makes CONVERSIONS and LABELS visible directly from consts sub-module
 """
 
-from .conversions import CONVERSIONS
-from .labels import LABELS
+from punits.consts.conversions import CONVERSIONS
+from punits.consts.labels import LABELS

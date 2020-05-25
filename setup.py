@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="punits",
-    version="0.1",
+    version="0.2",
     author="Julin S",
     author_email="julins@cannottellyou.yet",
     description="A simple utility to convert values between different units",
@@ -24,7 +24,7 @@ setuptools.setup(
         "Natural Language :: English",
     ],
     project_urls={
-        #'Changelog': 'https://github.com/user/project/CHANGELOG.rst',
+        'Changelog': 'https://github.com/ju-sh/punits/blob/master/CHANGELOG.md',
         'Issue Tracker': 'https://github.com/ju-sh/punits/issues',
     },
     install_requires=[],

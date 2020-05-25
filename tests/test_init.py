@@ -26,13 +26,15 @@ class TestFindUnitCode:
             ('data', 'vB'),
         ]
         for measure, unit in test_data:
-            with pytest.raises(punits.UnknownUnitException):
+            with pytest.raises(ValueError):
                 punits.find_unit_code(measure, unit)
 
 
 class TestPunits:
     def test_valid(self):
-        # Invocations with required parameters
+        """
+        Invocations with required parameters
+        """
         test_data = [
             ('length', 'in', 'ft', [32], {}, [2.666666666666667]),
             ('length', 'mi', 'm', [0.25], {}, [402.336]),
@@ -46,7 +48,11 @@ class TestPunits:
 
             ('data', 'KiB', 'nibble', [287.8], {}, [589414.4]),
             ('volume', 'imp gal', 'tbsp', [4.23], {}, [1300.4846553306973]),
-            ('mass', 'oz', 'mg', [8.1], {}, [229631.13731249998]),
+            ('mass', 'oz', 'mg', [8.1], None, [229631.13731249998]),
+
+            ('temperature', 'F', 'Ro', [324], None, [92.6666666666667]),
+            ('temperature', 'Re', 'De', [224], None, [-270]),
+            ('temperature', 'Ra', 'N', [124], None, [-67.40616666666666]),
         ]
         for (measure, src_unit_code, target_unit_code, values,
              params, expected) in test_data:
@@ -54,20 +60,24 @@ class TestPunits:
                                  values, params) == expected
 
     def test_missing_param(self):
-        # Invocations that raise exception due to missing parameters
+        """
+        Invocations that raise exception due to missing parameters
+        """
         test_data = [
             ('length', 'px', 'm', [562], {'no_dpi': 720}),
         ]
         for (measure, src_unit_code, target_unit_code,
              values, params) in test_data:
-            with pytest.raises(punits.MissingParameterException):
+            with pytest.raises(ValueError):
                 punits.punits(measure, src_unit_code, target_unit_code,
                               values, params)
 
 
 class TestGetFactor:
     def test_linear_units(self):
-        # For units that have a linear relationship
+        """
+        For units that have a linear relationship
+        """
         test_data = [
             ('length', 'm', 'cm', 0.01),
         ]
@@ -76,7 +86,9 @@ class TestGetFactor:
                                      target_unit_code) == expected
 
     def test_non_linear_units(self):
-        # For units that do not have a linear relationship
+        """
+        For units that do not have a linear relationship
+        """
         test_data = [
             ('temperature', 'C', 'F'),
         ]
@@ -88,6 +100,8 @@ class TestGetFactor:
 def test_to_from_base():
     test_data = [
         ('length', 'mm', 'to', 123, {}, 0.123),
+        ('length', 'px', 'to', 233, {'dpi': 200}, 0.029591),
+        ('temperature', 'C', 'from', 586, {}, 312.85),
     ]
     for measure, unit_code, to_from, value, params, expected in test_data:
         assert punits.to_from_base(measure, unit_code, to_from,
