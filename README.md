@@ -1,6 +1,6 @@
 # punits
 
-<a href="https://pypi.org/ju-sh/punits"><img alt="PyPI" src="https://img.shields.io/pypi/v/punits"></a>
+<a href="https://pypi.org/project/punits"><img alt="PyPI" src="https://img.shields.io/pypi/v/punits"></a>
 <a href="https://travis-ci.com/ju-sh/punits"><img alt="Build Status" src="https://api.travis-ci.com/ju-sh/punits.svg?branch=master"></a>
 <a href="https://github.com/ju-sh/punits/blob/master/LICENSE.md"><img alt="License: MIT" src="https://img.shields.io/pypi/l/punits"></a>
 
